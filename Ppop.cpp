@@ -133,7 +133,7 @@ void Ppop::parseJsonInt(String json, String key, int &value){
     return;
   }
   
-  value = (int) root["with"][0]["content"]["temperature"];
+  value = (int) root["with"][0]["content"][key];
 }
 
 void Ppop::parseJsonFloat(String json, String key, float &value){
@@ -145,7 +145,7 @@ void Ppop::parseJsonFloat(String json, String key, float &value){
     return;
   }
   
-  value = (int) root["with"][0]["content"]["temperature"];
+  value = (int) root["with"][0]["content"][key];
 }
 
 void Ppop::getDweetInt(String dweet, String key , int &payload){
