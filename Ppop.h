@@ -21,12 +21,14 @@ class Ppop
     void postOneFloatToIFTTT(String name,String key,  float value, String &response);
     void getDweetJSON(String dweet, String &content);
     void saveDweet(String dweet, String key, int value, String &payload);
-    void parseJsonInt(String json, String key, int &value);
     void getDweetInt(String dweet, String key , int &payload);
+    void getDweetFloat(String dweet, String key , float &payload);
   private:
     int _pin;
     char*  ssd;
     char*  password;
+    void parseJsonInt(String json, String key, int &value);
+    void parseJsonFloat(String json, String key, float &value);
 };
 
 #endif

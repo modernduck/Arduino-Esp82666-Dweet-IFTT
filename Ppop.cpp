@@ -136,6 +136,18 @@ void Ppop::parseJsonInt(String json, String key, int &value){
   value = (int) root["with"][0]["content"]["temperature"];
 }
 
+void Ppop::parseJsonFloat(String json, String key, float &value){
+  StaticJsonBuffer<1000> jsonBuffer;
+  JsonObject& root = jsonBuffer.parseObject(json);
+  // Test if parsing succeeds.
+  if (!root.success()) {
+    Serial.println("parseObject() failed");
+    return;
+  }
+  
+  value = (int) root["with"][0]["content"]["temperature"];
+}
+
 void Ppop::getDweetInt(String dweet, String key , int &payload){
   if (!client.connect("dweet.io" ,443)) {
     //Serial.println("connection failed");
@@ -174,6 +186,47 @@ unsigned long timeout = millis();
   Ppop::parseJsonInt( json,  key,  payload);
 
 }
+
+void Ppop::getDweetFloat(String dweet, String key , float &payload){
+  if (!client.connect("dweet.io" ,443)) {
+    //Serial.println("connection failed");
+    return;   
+  }
+
+  String path = "/get/dweets/for/";
+  path.concat(dweet);
+  String req = "";
+  req += "GET ";
+  req += path;
+  req += " HTTP/1.1\r\n";
+  req += "Host: ";
+  req += "dweet.io";
+  req += "\r\n";
+  req += "Connection: keep-alive\r\n";
+  req += "\r\n";
+ 
+  // Serial.println(req);
+  client.print(req);
+unsigned long timeout = millis();
+  while (client.available() == 0) {
+    if (millis() - timeout > 5000) {
+   //   Serial.println(">>> Client Timeout !");
+      client.stop();
+      return;
+    }
+  }
+  String json = "";
+  // Read all the lines of the reply from server and print them to Serial
+  while(client.available()){
+    String line = client.readStringUntil('\r');
+    json.concat(line);
+    
+  }
+  Ppop::parseJsonFloat( json,  key,  payload);
+
+}
+
+
 
 
 void Ppop::postOneIntToIFTTT(String name,String key,  int value, String &response){
