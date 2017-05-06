@@ -228,10 +228,11 @@ unsigned long timeout = millis();
    int a =0;
   while(client.available()){
     String line = client.readStringUntil('\r');
+    if(a > 6)
       json.concat(line);
     a++;
   }
-  
+  Serial.println(json);
   Ppop::parseJsonFloat( json,  key,  payload);
 
 }
