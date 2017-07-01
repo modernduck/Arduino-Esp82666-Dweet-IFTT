@@ -273,6 +273,25 @@ void Ppop::postOneFloatToIFTTT(String name,String key,  float value, String &res
 }
 
 
+void Ppop::postOneStringToIFTTT(String name,String key,  char* value, String &response){
+
+
+  String path = "/trigger/";
+  path.concat(name);
+  path.concat("/with/key/");
+  path.concat(key);
+  path.concat("?value1=");
+  path.concat(value);
+  
+  char *cstr = new char[path.length() + 1];
+  strcpy(cstr, path.c_str());
+  Serial.println(cstr);
+  Ppop::requestWeb("maker.ifttt.com", cstr, 443, 5000, response);
+}
+
+
+
+
 
 /*
 void Ppop::saveDweetInt(String dweet, String key, int value, String &payload){

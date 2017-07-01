@@ -19,6 +19,7 @@ class Ppop
     void requestWeb(char* host, char* path, int port, int interval, String &payload);
     void postOneIntToIFTTT(String name,String key,  int value, String &response);
     void postOneFloatToIFTTT(String name,String key,  float value, String &response);
+    void postOneStringToIFTTT(String name,String key,  char* value, String &response);
     void getDweetJSON(String dweet, String &content);
     void saveDweet(String dweet, String key, int value, String &payload);
     void getDweetInt(String dweet, String key , int &payload);
