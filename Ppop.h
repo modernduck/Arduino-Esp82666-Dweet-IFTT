@@ -22,6 +22,7 @@ class Ppop
     void postOneStringToIFTTT(String name,String key,  char* value, String &response);
     void getDweetJSON(String dweet, String &content);
     void saveDweet(String dweet, String key, int value, String &payload);
+    void saveDweetFloat(String dweet, String key, float value, String &payload);
     void getDweetInt(String dweet, String key , int &payload);
     void getDweetFloat(String dweet, String key , float &payload);
   private:

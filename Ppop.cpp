@@ -113,10 +113,57 @@ unsigned long timeout = millis();
   }
 }
 
+void Ppop::saveDweetFloat(String dweet, String key, float value, String &payload){
+  if (!client.connect("dweet.io" ,443)) {
+    //Serial.println("connection failed");
+    return;   
+  }
+
+  String info = "{";
+  info += "\"";
+  info += key;
+  info += "\":";
+  info += value;
+  info += "}";
+  
+  String req = "";
+  req += "POST ";
+  req += "/dweet/for/" + dweet;
+  req += " HTTP/1.1\r\n";
+  req += "Host: ";
+  req += "dweet.io";
+  req += "\r\n";
+  req += "Content-Length: ";
+  req += info.length();
+  req += "\r\n";
+  req += "Content-Type: application/json\r\n";
+  req += "Connection: keep-alive\r\n";
+  req += "\r\n";
+  req += info;
+ 
+   Serial.println(req);
+  client.print(req);
+unsigned long timeout = millis();
+  while (client.available() == 0) {
+    if (millis() - timeout > 5000) {
+   //   Serial.println(">>> Client Timeout !");
+      client.stop();
+      return;
+    }
+  }
+  payload = "";
+  // Read all the lines of the reply from server and print them to Serial
+  while(client.available()){
+    String line = client.readStringUntil('\r');
+    payload.concat(line);
+    
+  }
+}
+
 
 
 void Ppop::getDweetJSON(String dweet, String &content){
-  String path = "/get/dweets/for/";
+  String path = "/get/latest/dweets/for/";
   path.concat(dweet);
   char *cstr = new char[path.length() + 1];
   strcpy(cstr, path.c_str());
@@ -157,7 +204,7 @@ void Ppop::getDweetInt(String dweet, String key , int &payload){
     return;   
   }
 
-  String path = "/get/dweets/for/";
+  String path = "/get/latest/dweets/for/";
   path.concat(dweet);
   String req = "";
   req += "GET ";
@@ -201,7 +248,7 @@ void Ppop::getDweetFloat(String dweet, String key , float &payload){
     return;   
   }
 
-  String path = "/get/dweets/for/";
+  String path = "/get/latest/dweets/for/";
   path.concat(dweet);
   String req = "";
   req += "GET ";
