@@ -163,7 +163,7 @@ unsigned long timeout = millis();
 
 
 void Ppop::getDweetJSON(String dweet, String &content){
-  String path = "/get/latest/dweets/for/";
+  String path = "/get/latest/dweet/for/";
   path.concat(dweet);
   char *cstr = new char[path.length() + 1];
   strcpy(cstr, path.c_str());
@@ -204,7 +204,7 @@ void Ppop::getDweetInt(String dweet, String key , int &payload){
     return;   
   }
 
-  String path = "/get/latest/dweets/for/";
+  String path = "/get/latest/dweet/for/";
   path.concat(dweet);
   String req = "";
   req += "GET ";
@@ -248,7 +248,7 @@ void Ppop::getDweetFloat(String dweet, String key , float &payload){
     return;   
   }
 
-  String path = "/get/latest/dweets/for/";
+  String path = "/get/latest/dweet/for/";
   path.concat(dweet);
   String req = "";
   req += "GET ";
